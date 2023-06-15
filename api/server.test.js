@@ -70,6 +70,20 @@ describe('[post] / login', () => {
 
 })
 
+describe('[get] /jokes', () => {
+  const userNew = { username: 'Bruce', password: '0000'}
+  it('cannot call /api/jokes without token', async () => {
+    await request(server).post('/api/auth/register').send(userNew)
+    await request(server).post('/api/auth/login').send(userNew)
+    const response = await request(server).get('/api/jokes')
+    expect(response.status).toBe(402)
+    expect(response.body.message).toBe('token required')
+
+  })
+})
+
+
+
 
 
 
